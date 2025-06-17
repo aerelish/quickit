@@ -1,0 +1,11 @@
+body {
+  background-color: rgb(19, 19, 19);
+  color: white;
+}
+
+.main-content {
+  min-height: 100vh;
+  padding: 10% 12%;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,71 @@
+nav {
+  width: 100%;
+  position: fixed;
+  padding: 3em 12%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: black; */
+}
+
+a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  text-decoration: none;
+}
+
+a img {
+  width: 30px;
+  aspect-ratio: 1/1;
+  transition: 0.2s ease-in-out;
+}
+
+a img:hover {
+  width: 35px;
+}
+
+a h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--light);
+  opacity: 0.8;
+  transition: 0.3s ease-in-out;
+}
+
+a h1:hover {
+  opacity: 1;
+}
+
+/* this will be menu in future */
+.user-icon {
+  font-size: 1.5em;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s ease-in-out;
+}
+
+.user-icon:hover {
+  opacity: 1;
+}
+
+/* not using this for now */
+.nav-links {
+  display: none;
+  gap: 3em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.nav-links a {
+  color: var(--light);
+  opacity: 0.8;
+  transition: 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
