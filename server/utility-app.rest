@@ -1,0 +1,21 @@
+### GET /todo
+GET http://localhost:8080/api/todo
+
+### POST /todo
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "title": "new to-do item from test"
+}
+
+### UPDATE /todo:id
+PUT http://localhost:8080/api/todo/8
+Content-Type: application/json
+
+{
+  "title": "i updated this todoa"
+}
+
+### DELETE /todo:id
+DELETE http://localhost:8080/api/todo/9

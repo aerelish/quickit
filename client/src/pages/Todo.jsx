@@ -1,50 +1,70 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TodoItem from '../components/TodoItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
-
+import { getTodos, addTodo, updateTodo, deleteTodo } from '../services/api';
 import '../css/Todo.css';
 
 function Todo() {
-  
-  // dummy data
-  const todosDummyData = [
-    {
-      id: 1,
-      title: "Buy groceries",
-      completed: false
-    },
-    {
-      id: 2,
-      title: "Finish React project",
-      completed: false
-    },
-    {
-      id: 3,
-      title: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat sed deleniti corrupti. Corporis consequuntur consectetur, illum reiciendis blanditiis pariatur quaerat.',
-      completed: false
-    }
-  ];
-  
+    
   // initialize hooks
-  const [todos, setTodos] = useState(todosDummyData)
+  const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('');
   const [updatedTodoTitle, setUpdatedTodoTitle] = useState('');
   const [editing, setEditing] = useState(0);
 
-  const addTodo = (newTodo) => {
-    setTodos([...todos, {id: 4, title: newTodo, completed: false}])
-    console.log(todos)
+  const loadTodos = async () => {
+    try { 
+      const todos = await getTodos();
+      setTodos(todos);
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  const addNewTodo = async () => {
+    try {
+      await addTodo(newTodo);
+      loadTodos();
+    } catch (error) {
+      console.error(error)
+    } 
+  }
+  
+  const editTodoItem = async (id, title) => { 
+    setEditing(id);
+    setUpdatedTodoTitle(title);
   }
 
-  const updateTodoItem = (event) => {
+  const deleteTodoItem = async (id) => {
+    try {
+      await deleteTodo(id);
+      loadTodos();
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const addNewTodoItem = async (event) => {
     event.preventDefault();
-    console.log(editing)
-    const newTodos = todos.map(todo => (
-      todo.id === editing ? {...todo, title: updatedTodoTitle} : todo
-    ))
-    setTodos(newTodos);
-    setEditing(null);
+    try {
+      addNewTodo();
+      setNewTodo('');
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const updateSelectedTodoItem = async (event) => {
+    event.preventDefault();
+    try {
+      const updatedTodo = await updateTodo(editing, updatedTodoTitle);
+      console.log(updatedTodo);
+      setEditing(null);
+      loadTodos();
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const moveUp = (index) => {
@@ -63,28 +83,16 @@ function Todo() {
     const newTodos = [...todos];
     // swap indexes for index and index+1
     // note: index start with 0, so moving down means +1 index
+    
     [newTodos[index], newTodos[index + 1]] = [newTodos[index + 1], newTodos[index]];
     setTodos(newTodos);
   }
 
-  const editTodoItem = (id, title) => { 
-    setEditing(id);
-    setUpdatedTodoTitle(title)
-  }
-
-  const deleteTodoItem = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    addTodo(newTodo)
-    setNewTodo('');
-  }
+  useEffect(() => { loadTodos() }, []);
 
   return (
     <div className='todo-wrapper'>
-      <form className='todo-form' onSubmit={handleSubmit}>
+      <form className='todo-form' onSubmit={addNewTodoItem}>
         <input 
           className='todo-form-input' 
           type="text" 
@@ -100,7 +108,7 @@ function Todo() {
       <div className='todo-items'>
         {todos.map((todo, index) => (
           todo.id === editing ? (
-            <form className='todo-form edit' key={todo.id} onSubmit={updateTodoItem}>
+            <form className='todo-form edit' key={todo.id} onSubmit={updateSelectedTodoItem}>
               <input 
                 className='todo-form-input' 
                 type="text" 
