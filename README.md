@@ -4,8 +4,10 @@ An all-in-one productivity tool designed to help users quickly manage everyday m
 Yes, this is just a Todo app for now 🥲, but fear not the rest are coming soon...
 
 ### Tech Stack
-- ReactJs
-- NodeJs
+- ReactJS
+- NodeJS
+- Express
+- SQLite ->> PostgreSQL
 - Prisma
 
 ### Preview
