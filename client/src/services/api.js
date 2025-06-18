@@ -7,13 +7,32 @@ export const getTodos = async () => {
   } catch (error) {
     console.error(error)
   }
-}
+};
 
-export const addTodo = async (data) => {
+export const addTodo = async (title) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/todo', { title: data })
+    const response = await axios.post('http://localhost:8080/api/todo', { title })
     console.log(response.data) 
   } catch (error) {
     console.error(error)
   }  
-}
+};
+
+export const updateTodo = async (id, title) => {
+  try {
+    const response = await axios.put(`http://localhost:8080/api/todo/${id}`, { title })
+    return response.data;
+  } catch (error) {
+    console.error(error)
+  }
+};
+
+export const deleteTodo = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8080/api/todo/${id}`)
+    console.log(`Todo of id:${id} deleted...`) 
+  } catch (error) {
+    console.error(error)
+  }
+};
+
