@@ -1,41 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TodoItem from '../components/TodoItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
-
+import { getTodos, addTodo } from '../services/api';
 import '../css/Todo.css';
 
 function Todo() {
-  
-  // dummy data
-  const todosDummyData = [
-    {
-      id: 1,
-      title: "Buy groceries",
-      completed: false
-    },
-    {
-      id: 2,
-      title: "Finish React project",
-      completed: false
-    },
-    {
-      id: 3,
-      title: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat sed deleniti corrupti. Corporis consequuntur consectetur, illum reiciendis blanditiis pariatur quaerat.',
-      completed: false
-    }
-  ];
-  
+    
   // initialize hooks
-  const [todos, setTodos] = useState(todosDummyData)
+  const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('');
   const [updatedTodoTitle, setUpdatedTodoTitle] = useState('');
   const [editing, setEditing] = useState(0);
 
-  const addTodo = (newTodo) => {
-    setTodos([...todos, {id: 4, title: newTodo, completed: false}])
-    console.log(todos)
-  }
+  const loadTodos = async () => {
+    try { 
+      const todos = await getTodos();
+      setTodos(todos);
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  useEffect(() => { loadTodos() }, []);
+
+  // const addTodo = (newTodo) => {
+  //   setTodos([...todos, {id: 4, title: newTodo, completed: false}])
+  //   console.log(todos)
+  // }
 
   const updateTodoItem = (event) => {
     event.preventDefault();
@@ -76,9 +68,10 @@ function Todo() {
     setTodos(todos.filter(todo => todo.id !== id));
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    addTodo(newTodo)
+    await addTodo(newTodo);
+    loadTodos();
     setNewTodo('');
   }
 
