@@ -26,10 +26,13 @@ model User {
   fullname  String
   birthdate DateTime
   gender    Gender
+  todo      Todo[]
 }
 
 model Todo {
   id        Int     @id @default(autoincrement())
   title     String
   completed Boolean @default(false)
+  userId    Int?
+  User      User?   @relation(fields: [userId], references: [id])
 }

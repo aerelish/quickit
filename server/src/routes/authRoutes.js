@@ -6,16 +6,6 @@ import { Gender } from '@prisma/client';
 
 const router = express.Router()
 
-router.get('/users', async (req, res) => {
-  try {
-    const users = await prisma.user.findMany();
-    res.json(users)
-  } catch (error) {
-    console.log(error.message);
-    res.status(503).json({ message: 'Internal server error' });  
-  }
-});
-
 router.post('/register', async (req, res) => {
   const { username, password, fullname, birthdate, gender } = req.body;
 

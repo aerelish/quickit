@@ -26,8 +26,13 @@ export const register = async (user) => {
 }
 
 export const getTodos = async () => {
+  const token = localStorage.getItem('token');
   try {
-    const response = await axios.get('http://localhost:8080/api/todo');
+    const response = await axios.get('http://localhost:8080/api/todo', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     console.error(error)
@@ -35,8 +40,16 @@ export const getTodos = async () => {
 };
 
 export const addTodo = async (title) => {
+  const token = localStorage.getItem('token');
   try {
-    const response = await axios.post('http://localhost:8080/api/todo', { title })
+    const response = await axios.post('http://localhost:8080/api/todo', 
+      { title }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
     console.log(response.data) 
   } catch (error) {
     console.error(error)
@@ -44,8 +57,16 @@ export const addTodo = async (title) => {
 };
 
 export const updateTodo = async (id, title) => {
+  const token = localStorage.getItem('token');
   try {
-    const response = await axios.put(`http://localhost:8080/api/todo/${id}`, { title })
+    const response = await axios.put(`http://localhost:8080/api/todo/${id}`, 
+      { title }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
     return response.data;
   } catch (error) {
     console.error(error)
@@ -53,8 +74,15 @@ export const updateTodo = async (id, title) => {
 };
 
 export const deleteTodo = async (id) => {
+  const token = localStorage.getItem('token');
   try {
-    await axios.delete(`http://localhost:8080/api/todo/${id}`)
+    await axios.delete(`http://localhost:8080/api/todo/${id}`, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
     console.log(`Todo of id:${id} deleted...`) 
   } catch (error) {
     console.error(error)

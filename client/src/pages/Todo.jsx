@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import TodoItem from '../components/TodoItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../services/api';
+import TodoItem from '../components/TodoItem';
 import '../css/Todo.css';
 
 function Todo() {
