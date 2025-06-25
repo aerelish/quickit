@@ -9,18 +9,10 @@ Yes, this is just a Todo app for now 🥲, but fear not the rest are coming soon
 - Express
 - SQLite ->> PostgreSQL
 - Prisma
+- CSS ->> TailwindCSS
 
 ### Preview
 
+Initial Look : Front-End Only
 ![Quickit_v1](./_public/Quickit_v1.png)
 
----
-### TODO
-- ~~Make App Fullstack~~
-- Sign In/Up Page
-- Weather
-- Water Intake
-- Dark/Light Theme?
-- Budget Tracker
-- Containerize
-- Deploy
