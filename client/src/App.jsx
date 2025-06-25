@@ -31,7 +31,7 @@ function App() {
         </>
       ) : (
         <>
-          <Navbar/>
+          <Navbar setIsLoggedIn={setIsLoggedIn}/>
           <main className='main-content'>
             <Routes>
               <Route path="/" element={<Todo />}/>

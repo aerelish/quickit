@@ -40,15 +40,15 @@ a h1:hover {
 }
 
 /* this will be menu in future */
-.user-icon {
+.logout-icon {
   font-size: 1.5em;
   cursor: pointer;
   opacity: 0.8;
   transition: 0.3s ease-in-out;
 }
 
-.user-icon:hover {
-  opacity: 1;
+.logout-icon:hover {
+  color: red;
 }
 
 /* not using this for now */
@@ -68,4 +68,3 @@ a h1:hover {
 .nav-links a:hover {
   opacity: 1;
 }
-

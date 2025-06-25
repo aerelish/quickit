@@ -1,11 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-
+import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../assets/logo_light.png'
 import '../css/Navbar.css';
 
-function Navbar() {
+function Navbar({setIsLoggedIn}) {
+
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false)
+    navigate('/');
+  };
+
   return (
     <nav>
       <Link to="/">
@@ -16,7 +24,7 @@ function Navbar() {
         <Link to="/">TODO</Link>
         <Link to="/water">WATER</Link>
       </div>
-      <FontAwesomeIcon className="user-icon" icon={faUser}/>
+      <FontAwesomeIcon className="logout-icon" icon={faPowerOff} title="Logout" onClick={logOut}/>
     </nav>
   )
 }
