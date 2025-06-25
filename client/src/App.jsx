@@ -26,7 +26,7 @@ function App() {
         <>
           <Routes>
             <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
           </Routes>
         </>
       ) : (
@@ -35,7 +35,8 @@ function App() {
           <main className='main-content'>
             <Routes>
               <Route path="/" element={<Todo />}/>
-              {/* <Route path="/water" element={<Water/>}/> */}
+              {/* <Route path="/water" element={<Water/>}/> */}            
+              <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
             </Routes>
           </main>
         </>

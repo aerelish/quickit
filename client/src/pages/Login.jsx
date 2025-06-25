@@ -3,7 +3,7 @@ import { login } from '../services/api';
 import { useState } from 'react';
 import '../css/Login.css';
 
-function Login({ setIsLoggedIn }) {
+function Login({setIsLoggedIn}) {
   const navigate = useNavigate();
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');

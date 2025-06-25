@@ -108,8 +108,9 @@
   border-bottom: 1px solid var(--light);
 }
 
-.row-3 .col-2 input {
+.row-3 .col-2 label input {
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .register-form button {
@@ -146,4 +147,10 @@
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+.register-error {
+  color: red;
+  text-align: center;
+  padding: 20px;
 }

@@ -9,6 +9,22 @@ export const login = async (username, password) => {
   }
 };
 
+export const register = async (user) => {
+  const { username, password, fullname, birthdate, gender } = user;
+  try {
+    const response = await axios.post('http://localhost:8080/api/auth/register', {
+      username, 
+      password, 
+      fullname, 
+      birthdate, 
+      gender
+    });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
 export const getTodos = async () => {
   try {
     const response = await axios.get('http://localhost:8080/api/todo');

@@ -20,6 +20,9 @@ Content-Type: application/json
 ### DELETE /todo:id
 DELETE http://localhost:8080/api/todo/9
 
+### GET /auth/users
+GET http://localhost:8080/api/auth/users
+
 ### POST /auth/register
 POST http://localhost:8080/api/auth/register/
 Content-Type: application/json

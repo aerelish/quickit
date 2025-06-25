@@ -6,6 +6,16 @@ import { Gender } from '@prisma/client';
 
 const router = express.Router()
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users)
+  } catch (error) {
+    console.log(error.message);
+    res.status(503).json({ message: 'Internal server error' });  
+  }
+});
+
 router.post('/register', async (req, res) => {
   const { username, password, fullname, birthdate, gender } = req.body;
 
@@ -28,7 +38,15 @@ router.post('/register', async (req, res) => {
         gender
       }
     });
-    res.json(user)
+
+    // create a JWT token
+    const token = jwt.sign({ id:user.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
+
+    res.json({
+      success: true,
+      message: 'New user registered',
+      token
+    })
   } catch (error) {
     console.log(error.message);
     res.status(503).json({ message: 'Internal server error' });  
