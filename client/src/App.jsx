@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Navbar from './components/Navbar';
 import Todo from './pages/Todo';
@@ -13,12 +13,19 @@ function App() {
   
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  useEffect(() => { 
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true)
+    } 
+  }, []);
+
   return (
     <>
       { !isLoggedIn ? (
         <>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </>

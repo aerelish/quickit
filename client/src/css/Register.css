@@ -1,8 +1,8 @@
-input[type="text"],
-input[type="date"],
-input[type="password"],
-input[type="email"],
-input[type="radio"] {
+.register-form input[type="text"],
+.register-form input[type="date"],
+.register-form input[type="password"],
+.register-form input[type="email"],
+.register-form input[type="radio"] {
   font-size: 1.2em;
   color: var(--light);
   outline: none;
@@ -97,6 +97,7 @@ input[type="radio"] {
 .row-3 .col-1 input {
   border: none;
   padding-left: 10px;
+  cursor: pointer;
 }
 
 .row-3 .col-2 {
@@ -107,6 +108,10 @@ input[type="radio"] {
   border-bottom: 1px solid var(--light);
 }
 
+.row-3 .col-2 input {
+  cursor: pointer;
+}
+
 .register-form button {
   width: 100%;
   padding: .5em;
@@ -114,9 +119,11 @@ input[type="radio"] {
   font-size: 1em;
   cursor: pointer;
   background-color: transparent;
+  border: 2px solid var(--light);
   border-color: var(--light);
   color: var(--light);
   border-radius: 4px;
+  transition: .2s ease-in-out;
 }
 
 .register-form button:hover {

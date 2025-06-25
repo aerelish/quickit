@@ -1,5 +1,14 @@
 import axios from 'axios';
 
+export const login = async (username, password) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/auth/login', { username, password });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const getTodos = async () => {
   try {
     const response = await axios.get('http://localhost:8080/api/todo');
@@ -35,4 +44,3 @@ export const deleteTodo = async (id) => {
     console.error(error)
   }
 };
-

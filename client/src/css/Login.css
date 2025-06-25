@@ -71,7 +71,10 @@
   cursor: pointer;
   background-color: transparent;
   color: var(--light);
+  border: 2px solid var(--light);
+  border-color: var(--light);
   border-radius: 4px;
+  transition: .2s ease-in-out;
 }
 
 .login-form button:hover {
@@ -93,4 +96,10 @@
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+.login-error {
+  color: red;
+  text-align: center;
+  padding: 20px;
 }
