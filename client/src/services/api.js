@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
 export const login = async (username, password) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/auth/login', { username, password });
+    const response = await axios.post(`${API_URL}/api/auth/login`, { username, password });
     return response.data;
   } catch (error) {
     return error.response.data;
@@ -12,7 +14,7 @@ export const login = async (username, password) => {
 export const register = async (user) => {
   const { username, password, fullname, birthdate, gender } = user;
   try {
-    const response = await axios.post('http://localhost:8080/api/auth/register', {
+    const response = await axios.post(`${API_URL}/api/auth/register`, {
       username, 
       password, 
       fullname, 
@@ -28,7 +30,7 @@ export const register = async (user) => {
 export const getTodos = async () => {
   const token = localStorage.getItem('token');
   try {
-    const response = await axios.get('http://localhost:8080/api/todo', {
+    const response = await axios.get(`${API_URL}/api/todo`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -42,7 +44,7 @@ export const getTodos = async () => {
 export const addTodo = async (title) => {
   const token = localStorage.getItem('token');
   try {
-    const response = await axios.post('http://localhost:8080/api/todo', 
+    const response = await axios.post(`${API_URL}/api/todo`, 
       { title }, 
       {
         headers: {
@@ -59,7 +61,7 @@ export const addTodo = async (title) => {
 export const updateTodo = async (id, title) => {
   const token = localStorage.getItem('token');
   try {
-    const response = await axios.put(`http://localhost:8080/api/todo/${id}`, 
+    const response = await axios.put(`${API_URL}/api/todo/${id}`, 
       { title }, 
       {
         headers: {
@@ -76,7 +78,7 @@ export const updateTodo = async (id, title) => {
 export const deleteTodo = async (id) => {
   const token = localStorage.getItem('token');
   try {
-    await axios.delete(`http://localhost:8080/api/todo/${id}`, 
+    await axios.delete(`${API_URL}/api/todo/${id}`, 
       {
         headers: {
           Authorization: `Bearer ${token}`
