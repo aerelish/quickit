@@ -88,7 +88,12 @@ function Todo() {
     setTodos(newTodos);
   }
 
-  useEffect(() => { loadTodos() }, []);
+  useEffect(() => { 
+    const token = localStorage.getItem('token');
+    if (token) {
+      loadTodos()
+    } 
+  }, []);
 
   return (
     <div className='todo-wrapper'>

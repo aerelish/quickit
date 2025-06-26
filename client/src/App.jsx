@@ -11,13 +11,13 @@ import './css/App.css'
 
 function App() {
   
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(() => { 
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true)
-    } 
+    }
   }, []);
 
   return (
