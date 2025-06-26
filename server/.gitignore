@@ -3,7 +3,6 @@ node_modules
 .env
 
 # Prisma
-prisma/migrations/
 prisma/generated/
 
 # SQLite DB
