@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../services/api';
 import TodoItem from '../components/TodoItem';
 import '../css/Todo.css';
 
-function Todo() {
-    
+function Todo({setIsLoggedIn}) {
+  
+  const navigate = useNavigate();
+
   // initialize hooks
   const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('');
@@ -14,12 +17,16 @@ function Todo() {
   const [editing, setEditing] = useState(0);
 
   const loadTodos = async () => {
-    try { 
-      const todos = await getTodos();
-      setTodos(todos);
+    try {
+      const todos = await getTodos()
+      setTodos(todos)
     } catch (error) {
-      console.error(error)
-    }
+      if (error.response?.status === 401 || error.message === 'Unauthorized') {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        navigate('/');
+      }
+    }  
   };
 
   const addNewTodo = async () => {

@@ -34,7 +34,7 @@ function App() {
           <Navbar setIsLoggedIn={setIsLoggedIn}/>
           <main className='main-content'>
             <Routes>
-              <Route path="/" element={<Todo />}/>
+              <Route path="/" element={<Todo setIsLoggedIn={setIsLoggedIn}/>}/>
               {/* <Route path="/water" element={<Water/>}/> */}            
               <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
             </Routes>

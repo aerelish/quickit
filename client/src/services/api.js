@@ -29,16 +29,12 @@ export const register = async (user) => {
 
 export const getTodos = async () => {
   const token = localStorage.getItem('token');
-  try {
-    const response = await axios.get(`${API_URL}/api/todo`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error(error)
-  }
+  const response = await axios.get(`${API_URL}/api/todo`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
 };
 
 export const addTodo = async (title) => {
