@@ -8,6 +8,9 @@ const app = express();
 // setup port
 const PORT = process.env.PORT || 8080
 
+// setup domain
+const DOMAIN = process.env.DOMAIN || `http://localhost:${PORT}`
+
 // middlewares
 app.use(cors())
 app.use(express.json());
@@ -18,5 +21,5 @@ app.use('/api', apiRoutes);
 
 // listen to app
 app.listen(PORT, () => {
-  console.log(`Server is now running on http://localhost:${PORT}`);
+  console.log(`Server is now running on ${DOMAIN}`);
 });
