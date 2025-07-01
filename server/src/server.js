@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080
 const DOMAIN = process.env.DOMAIN || `http://localhost:${PORT}`
 
 // middlewares
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
 // routes

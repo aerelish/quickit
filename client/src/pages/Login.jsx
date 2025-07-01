@@ -1,10 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../services/api';
+// packages
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+// services
+import { login } from '../services/authServices';
+
+// context
+import { useAuthContext } from '../context/AuthContext';
+
+// styling
 import '../css/Login.css';
 
-function Login({setIsLoggedIn}) {
+function Login() {
+
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useAuthContext()
+
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ loginError, setLoginError ] = useState('')
@@ -13,12 +24,12 @@ function Login({setIsLoggedIn}) {
     event.preventDefault();
     const response = await login(username, password);
     if (response.success) {
-      localStorage.setItem('token', response.token)
-      setLoginError('')
-      setIsLoggedIn(true)
+      localStorage.setItem('token', response.data);      
+      setIsLoggedIn(true);
+      setLoginError('');
       navigate('/');
     } else {
-      setLoginError(response.message)
+      setLoginError(response.error)
     }
     setUsername('');
     setPassword('');

@@ -10,7 +10,6 @@ function authMiddleware(req, res, next) {
   };
 
   try {
-
     // verify the token using the secret key
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
