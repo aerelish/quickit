@@ -11,8 +11,5 @@ Yes, this is just a Todo app for now 🥲, but fear not the rest are coming soon
 - Prisma
 - CSS ->> TailwindCSS
 
-### Preview
-
-Initial Look : Front-End Only
-![Quickit_v1](./_public/Quickit_v1.png)
+![quickit](./_public/quickit.png)
 
