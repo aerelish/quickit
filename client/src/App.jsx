@@ -20,8 +20,7 @@ function App() {
   
   /**
   * TODO
-  * - add authentication for token
-  * - move token from localstorage to coockie 
+  * - move token from localstorage to cookie 
   **/ 
 
   return (

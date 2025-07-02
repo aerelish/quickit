@@ -14,7 +14,7 @@ import '../css/Login.css';
 function Login() {
 
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuthContext()
+  const { setIsLoggedIn, setIsTokenValid } = useAuthContext()
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -26,6 +26,7 @@ function Login() {
     if (response.success) {
       localStorage.setItem('token', response.data);      
       setIsLoggedIn(true);
+      setIsTokenValid(true);
       setLoginError('');
       navigate('/');
     } else {

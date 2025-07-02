@@ -1,14 +1,25 @@
+// packages
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
-import { getTodos, addTodo, updateTodo, deleteTodo } from '../services/api';
+
+// components
 import TodoItem from '../components/TodoItem';
+
+// services
+import { addTodo, updateTodo, deleteTodo } from '../services/api';
+import { validateToken } from '../services/authServices';
+import { getTodos } from '../services/todoServices';
+
+// context
+import { useAuthContext } from '../context/AuthContext';
+
+// styling
 import '../css/Todo.css';
 
-function Todo({setIsLoggedIn}) {
+function Todo() {
   
-  const navigate = useNavigate();
+  const { isTokenValid, setIsTokenValid } = useAuthContext();
 
   // initialize hooks
   const [todos, setTodos] = useState([])
@@ -17,16 +28,15 @@ function Todo({setIsLoggedIn}) {
   const [editing, setEditing] = useState(0);
 
   const loadTodos = async () => {
-    try {
-      const todos = await getTodos()
-      setTodos(todos)
-    } catch (error) {
-      if (error.response?.status === 401 || error.message === 'Unauthorized') {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        navigate('/');
-      }
-    }  
+
+    if (!isTokenValid) {
+      const isValid = await validateToken();
+      if (!isValid) localStorage.removeItem('token');
+      setIsTokenValid(isValid);
+    }
+
+    const response = await getTodos();
+    if (response.success) setTodos(response.data)
   };
 
   const addNewTodo = async () => {
@@ -90,17 +100,11 @@ function Todo({setIsLoggedIn}) {
     const newTodos = [...todos];
     // swap indexes for index and index+1
     // note: index start with 0, so moving down means +1 index
-    
     [newTodos[index], newTodos[index + 1]] = [newTodos[index + 1], newTodos[index]];
     setTodos(newTodos);
   }
 
-  useEffect(() => { 
-    const token = localStorage.getItem('token');
-    if (token) {
-      loadTodos()
-    } 
-  }, []);
+  useEffect(() => { loadTodos() }, []);
 
   return (
     <div className='todo-wrapper'>
@@ -146,6 +150,6 @@ function Todo({setIsLoggedIn}) {
       </div>
     </div>
   )
-}
+};
 
 export default Todo

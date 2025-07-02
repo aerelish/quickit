@@ -6,6 +6,27 @@ import { Gender } from '@prisma/client';
 
 const router = express.Router()
 
+/** @note routes here are unprotected */
+
+// api/auth/validate
+router.get('/validate', async (req, res) => {
+  
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+     return res.status(401).json({ message: 'Authentication token is required' });
+  };
+
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    res.status(200).json({ valid: true });
+  } catch (error) {
+    console.error('Authentication error:', error.message);
+    res.status(401).json({ valid: false, message: 'Invalid or expired token' });
+  };
+
+});
+
+// api/auth/register
 router.post('/register', async (req, res) => {
   const { username, password, fullname, birthdate, gender } = req.body;
   // salt = cost factor, determines how many times to run the hashing algorithm
@@ -35,6 +56,7 @@ router.post('/register', async (req, res) => {
   };
 });
 
+// api/auth/login
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
