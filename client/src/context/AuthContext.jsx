@@ -4,21 +4,29 @@ import { validateToken } from '../services/authServices';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isTokenValid, setIsTokenValid] = useState(false);
 
   useEffect(() => {
 
-    const setTokenValidation = async () => {      
-      const isValid = await validateToken();
-      if (!isValid) localStorage.removeItem('token')
-      setIsLoggedIn(isValid); 
-      setIsTokenValid(isValid);
+    const setTokenValidation = async () => {
+
+      const token = localStorage.getItem('token');  
+      if (!token) {
+        setIsLoggedIn(false); 
+        return;
+      }
+      
+      const response = await validateToken();
+      if (!response.success) localStorage.removeItem('token');
+
+      setIsLoggedIn(response.success); 
+      setIsTokenValid(response.success);
+
     };
 
-    const token = localStorage.getItem('token');   
-    if (token) setTokenValidation();
+    setTokenValidation();
 
   }, []);
 

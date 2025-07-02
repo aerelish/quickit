@@ -4,6 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export const validateToken = async () => {
   const token = localStorage.getItem('token');
+  if (!token) return { success: false, message: 'Authentication token not found' };
   try {
     
     const response = await axios.get(`${API_URL}/api/auth/validate`, {
@@ -12,21 +13,14 @@ export const validateToken = async () => {
       }
     });
 
-    return response.data.valid;
+    return { success: response.data.valid };
 
   } catch (error) {
-    
-    const status = error.response?.status;
-    const valid = error.response?.data?.valid;
-
-    if (status === 401 || valid === false) {
-      return false;
-    }
-
-    // log unexpected issues in development
-    if (import.meta.env.DEV) {
-      console.warn('Token validation failed:', error);
-    };
+    return { 
+      success: error.response?.data?.valid,  
+      status: error.response?.status,
+      message: error.response?.data?.message || 'Something went wrong' 
+    }; 
   };
 };
 
