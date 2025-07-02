@@ -65,10 +65,10 @@ router.delete('/:id', async (req, res) => {
         userId: req.userId
       }
     });
-    res.json({message: 'Deleted successfully...'})
+    res.json({ success: true, message: 'Deleted successfully...' })
   } catch (error) {
     console.log(error.message)
-    res.status(503).json({ message: 'Internal server error' });  
+    res.status(503).json({ success: false, message: 'Internal server error' });  
   }
 })
 

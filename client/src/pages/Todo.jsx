@@ -7,9 +7,8 @@ import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import TodoItem from '../components/TodoItem';
 
 // services
-import { addTodo, updateTodo, deleteTodo } from '../services/api';
 import { validateToken } from '../services/authServices';
-import { getTodos } from '../services/todoServices';
+import { getTodos, addTodo, updateTodo, deleteTodo} from '../services/todoServices';
 
 // context
 import { useAuthContext } from '../context/AuthContext';
@@ -28,61 +27,50 @@ function Todo() {
   const [editing, setEditing] = useState(0);
 
   const loadTodos = async () => {
-
     if (!isTokenValid) {
       const isValid = await validateToken();
       if (!isValid) localStorage.removeItem('token');
       setIsTokenValid(isValid);
     }
-
     const response = await getTodos();
     if (response.success) setTodos(response.data)
   };
 
-  const addNewTodo = async () => {
-    try {
-      await addTodo(newTodo);
-      loadTodos();
-    } catch (error) {
-      console.error(error)
-    } 
-  }
-  
-  const editTodoItem = async (id, title) => { 
-    setEditing(id);
-    setUpdatedTodoTitle(title);
-  }
-
-  const deleteTodoItem = async (id) => {
-    try {
-      await deleteTodo(id);
-      loadTodos();
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const addNewTodoItem = async (event) => {
+  const addTodoItem = async (event) => {
     event.preventDefault();
-    try {
-      addNewTodo();
+    const response = await addTodo(newTodo);
+    if (response.success) { 
       setNewTodo('');
-    } catch (error) {
-      console.error(error)
-    }
-  }
+      loadTodos();
+    } else {
+      console.error(response.message);
+    };
+  };
 
-  const updateSelectedTodoItem = async (event) => {
+  const updateTodoItem = async (event) => {
     event.preventDefault();
-    try {
-      const updatedTodo = await updateTodo(editing, updatedTodoTitle);
-      console.log(updatedTodo);
+    const response = await updateTodo(editing, updatedTodoTitle);
+    if (response.success) {
       setEditing(null);
       loadTodos();
-    } catch (error) {
-      console.error(error)
-    }
-  }
+    } else {
+      console.error(response.message);
+    };
+  };
+
+  const deleteTodoItem = async (id) => {
+    const response = await deleteTodo(id);
+    if (response.success) {
+      loadTodos();
+    } else {
+      console.error(response.message);
+    };
+  };
+
+  const editTodoItem = (id, title) => { 
+    setEditing(id);
+    setUpdatedTodoTitle(title);
+  };
 
   const moveUp = (index) => {
     if (index === 0) return;
@@ -92,7 +80,7 @@ function Todo() {
     // note: index start with 0, so moving up means -1 index
     [newTodos[index], newTodos[index - 1]] = [newTodos[index - 1], newTodos[index]];
     setTodos(newTodos);
-  }
+  };
 
   const moveDown = (index) => {
     if (index === todos.length - 1) return;
@@ -102,13 +90,13 @@ function Todo() {
     // note: index start with 0, so moving down means +1 index
     [newTodos[index], newTodos[index + 1]] = [newTodos[index + 1], newTodos[index]];
     setTodos(newTodos);
-  }
+  };
 
   useEffect(() => { loadTodos() }, []);
 
   return (
     <div className='todo-wrapper'>
-      <form className='todo-form' onSubmit={addNewTodoItem}>
+      <form className='todo-form' onSubmit={addTodoItem}>
         <input 
           className='todo-form-input' 
           type="text" 
@@ -124,7 +112,7 @@ function Todo() {
       <div className='todo-items'>
         {todos.map((todo, index) => (
           todo.id === editing ? (
-            <form className='todo-form edit' key={todo.id} onSubmit={updateSelectedTodoItem}>
+            <form className='todo-form edit' key={todo.id} onSubmit={updateTodoItem}>
               <input 
                 className='todo-form-input' 
                 type="text" 
