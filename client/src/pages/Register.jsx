@@ -1,10 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
+// packages
 import { useState } from 'react';
-import { register } from '../services/api';
+import { Link, useNavigate } from 'react-router-dom';
+
+// services
+import { register } from '../services/authServices';
+
+// context
+import { useAuthContext } from '../context/AuthContext';
+
+// styling
 import '../css/Register.css'
 
-function Register({setIsLoggedIn}) {
+function Register() {
+
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useAuthContext();
+  
   const [ registerError, setRegisterError ] = useState('');
   const [ formData, setFormData ] = useState({
     username: '',
@@ -18,14 +29,14 @@ function Register({setIsLoggedIn}) {
     event.preventDefault();
     const response = await register(formData);
     if (response.success) {
-      localStorage.setItem('token', response.token)
-      setRegisterError('')
-      setIsLoggedIn(true)
+      localStorage.setItem('token', response.data); 
+      setIsLoggedIn(true);
+      setRegisterError('');
       navigate('/');
     } else {
-      setRegisterError(response.message)
-    }
-  }
+      setRegisterError(response.error);
+    };
+  };
 
   return (
     <div className="register-wrapper">
