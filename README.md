@@ -13,5 +13,5 @@ Yes, this is just a Todo app for now 🥲, but fear not the rest are coming soon
 
 ### Preview
 
-![quickit](./_public/quickit.png)
+![quickit](./assets/quickit.png)
 
