@@ -1,7 +1,5 @@
 // packages
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import TodoItem from '../components/TodoItem';
