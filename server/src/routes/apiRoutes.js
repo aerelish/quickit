@@ -1,8 +1,8 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
-import authRoutes from './authRoutes.js'
-import userRoutes from './userRoutes.js'
-import todoRoutes from './todoRoutes.js'
+import authRoutes from '../modules/auth/authRoutes.js';
+import userRoutes from '../modules/user/userRoutes.js';
+import todoRoutes from '../modules/todo/todoRoutes.js';
 
 const router = express.Router();
 

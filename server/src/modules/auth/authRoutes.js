@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import prisma from '../prismaClient.js';
+import prisma from '../../db/prismaClient.js';
 import { Gender } from '@prisma/client';
 
 const router = express.Router()

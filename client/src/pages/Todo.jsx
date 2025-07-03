@@ -1,7 +1,5 @@
 // packages
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import TodoItem from '../components/TodoItem';
@@ -12,9 +10,7 @@ import { getTodos, addTodo, updateTodo, deleteTodo} from '../services/todoServic
 
 // context
 import { useAuthContext } from '../context/AuthContext';
-
-// styling
-import '../css/Todo.css';
+import TodoForm from '../components/TodoForm';
 
 function Todo() {
   
@@ -92,37 +88,29 @@ function Todo() {
     setTodos(newTodos);
   };
 
-  useEffect(() => { loadTodos() }, []);
+  useEffect(() => { loadTodos() });
 
   return (
-    <div className='todo-wrapper'>
-      <form className='todo-form' onSubmit={addTodoItem}>
-        <input 
-          className='todo-form-input' 
-          type="text" 
-          placeholder='enter todo here...'
-          value={newTodo}
-          onChange={(event) => setNewTodo(event.target.value)}
-          onClick={() => ( editing !== null && setEditing(0) )}
-        />
-        <button className='todo-form-btn' type='submit'>
-          <FontAwesomeIcon icon={faArrowRight}/>
-        </button>
-      </form>
-      <div className='todo-items'>
+    <div className='max-w-lg mx-auto flex flex-col justify-center items-center'>
+      <TodoForm 
+        onSubmit={addTodoItem}
+        placeholder='have something todo?'
+        value={newTodo}
+        onChange={(event) => setNewTodo(event.target.value)}
+        onClick={() => (editing !== null && setEditing(0))}
+        icon={'faArrowRight'}
+      />
+      <div className='w-full'>
         {todos.map((todo, index) => (
           todo.id === editing ? (
-            <form className='todo-form edit' key={todo.id} onSubmit={updateTodoItem}>
-              <input 
-                className='todo-form-input' 
-                type="text" 
-                value={updatedTodoTitle}
-                onChange={(event) => setUpdatedTodoTitle(event.target.value)}
-              />
-              <button className='todo-form-btn' type='submit'>
-                <FontAwesomeIcon className='action' icon={faFloppyDisk}/>
-              </button>
-            </form>
+            <TodoForm
+              key={todo.id}
+              onSubmit={updateTodoItem}
+              placeholder='have something todo?'
+              value={updatedTodoTitle}
+              onChange={(event) => setUpdatedTodoTitle(event.target.value)}
+              icon={'faFloppyDisk'}
+            />
           ) : (
             <TodoItem
               key={todo.id}

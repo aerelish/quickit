@@ -11,9 +11,6 @@ import Todo from './pages/Todo';
 // import context
 import { useAuthContext } from './context/AuthContext.jsx';
 
-// import others
-import './css/App.css'
-
 function App() {
   
   const { isLoggedIn } = useAuthContext();
@@ -33,7 +30,7 @@ function App() {
         ) : (
           <ProtectedRoute>
             <Navbar />
-            <main className='main-content'>
+            <main className='w-screen h-screen pt-12 px-8'>
               <Todo/>
             </main>   
           </ProtectedRoute>
