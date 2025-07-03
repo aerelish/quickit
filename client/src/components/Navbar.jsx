@@ -8,7 +8,6 @@ import { useAuthContext } from "../context/AuthContext";
 
 // others
 import Logo from '../assets/logo_light.png'
-import '../css/Navbar.css';
 
 function Navbar() {
 
@@ -22,16 +21,18 @@ function Navbar() {
   };
 
   return (
-    <nav>
-      <Link to="/">
-        <img src={Logo} alt="ejrLogo"/>
-        <h1>Quickit</h1>
-      </Link>
-      <div className="nav-links">
-        <Link to="/">TODO</Link>
-        <Link to="/water">WATER</Link>
+    <nav className="top-1 w-full z-40 pt-[4em]">
+      <div className="max-w-4xl mx-auto w-full px-8 md:px-24 flex justify-between items-center">
+        <Link className="flex items-center gap-2" to="/">
+          <img className="w-6 h-6" src={Logo} alt="ejrLogo"/>
+          <h1 className="text-2xl font-semibold">Quickit</h1>
+        </Link>
+        {/* <div className="">
+          <Link to="/">TODO</Link>
+          <Link to="/water">WATER</Link>
+        </div> */}
+        <FontAwesomeIcon className="text-2xl pt-1 h-full cursor-pointer transition-all duration-200 hover:text-red-500" icon={faPowerOff} title="Logout" onClick={logOut}/>
       </div>
-      <FontAwesomeIcon className="logout-icon" icon={faPowerOff} title="Logout" onClick={logOut}/>
     </nav>
   )
 }

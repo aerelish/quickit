@@ -96,9 +96,10 @@ function Register() {
         </div>
         <p className='my-2 text-center font-xs text-red-600'>{registerError}</p>
         <Button type="submit">Register</Button>
-        <div className="text-center py-1 lg:text-lg">
-          Already have an account? <Link className='font-semibold hover:text-[var(--accent-color)]' to="/">Login</Link>
-        </div>
+        <p className="text-center py-1 lg:text-lg">
+          Already have an account?
+          <span><br/><Link className='font-semibold hover:text-[var(--accent-color)]' to="/">Login</Link></span>
+        </p>
       </form>
     </div>
   )

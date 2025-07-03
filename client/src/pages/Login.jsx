@@ -58,9 +58,10 @@ function Login() {
         </div>
         <p className='my-2 text-center font-xs text-red-600'>{loginError}</p>
         <Button type="submit">Login</Button>
-        <div className="text-center py-1 lg:text-lg">
-          Don't have an account? <Link className='font-semibold hover:text-[var(--accent-color)]' to="/register">Register</Link>
-        </div>
+        <p className="text-center py-1 lg:text-lg">
+          Don't have an account? 
+          <span><br/><Link className='font-semibold hover:text-[var(--accent-color)]' to="/register">Register</Link></span>
+        </p>
       </form>
     </div>
   );
