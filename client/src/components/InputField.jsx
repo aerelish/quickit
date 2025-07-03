@@ -8,9 +8,9 @@ function InputField({
   required = false,
 }) {
   return (
-    <div className="my-2">
+    <div className="my-2 md:w-full">
       {label && (
-        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1 lg:text-2xl">
+        <label htmlFor={name} className="block text-sm font-medium text-gray-300 mb-1 lg:text-2xl">
           {label}
         </label>
       )}

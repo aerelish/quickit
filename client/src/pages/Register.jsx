@@ -2,14 +2,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+// components
+import InputField from '../components/InputField';
+import Button from '../components/Button';
+
 // services
 import { register } from '../services/authServices';
 
 // context
 import { useAuthContext } from '../context/AuthContext';
-
-// styling
-import '../css/Register.css'
 
 function Register() {
 
@@ -22,7 +23,7 @@ function Register() {
     password: '',
     fullname: '',
     birthdate: new Date(),
-    gender: ''
+    gender: 'MALE'
   })
 
   const handleSubmit = async (event) => {
@@ -39,82 +40,65 @@ function Register() {
   };
 
   return (
-    <div className="register-wrapper">
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2>Register</h2>
-        <div className="register-input">
-          <div className="row-1">
-            <input 
-              type="text" 
-              placeholder="Username" 
-              required 
+    <div className="w-screen h-screen flex justify-center items-center px-8">
+      <form className="border-1 border-zinc-600 rounded-lg p-8 mx-auto max-w-4xl md:w-2xl lg:w-4xl lg:py-20 lg:px-24" onSubmit={handleSubmit}>
+        <h1 className='text-3xl pb-4 text-left md:text-5xl'>Register</h1>
+        <div className="flex flex-col">
+          <div className="flex flex-col md:flex-row md:justify-between md:gap-6">
+            <InputField
               name='username'
+              placeholder="Username"
+              required={true}
               value={formData.username}
               onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
             />
-            <input 
-              type="password" 
-              placeholder="Password" 
-              required 
+            <InputField
+              type='password'
               name='password'
+              placeholder="Password"
+              required={true}
               value={formData.password}
               onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
             />
           </div>
-          <div className="row-2">
-            <input 
-              type="text" 
-              placeholder='Fullname' 
+          <div className="flex flex-col">
+            <InputField
               name='fullname'
+              placeholder="Fullname"
               value={formData.fullname}
               onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
             />
           </div>
-          <div className="row-3">
-            <div className="col-1">
-              <label>
-                Birthdate: 
-                <input 
-                  type="date"  
-                  name='birthdate'
-                  value={formData.birthdate}
-                  onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
-                />   
+          <div className="flex flex-col md:flex-row md:justify-between md:gap-6">
+            <InputField
+              label='Birthdate'
+              type='date'
+              name='birthdate'
+              value={formData.birthdate}
+              onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
+            />
+            <div className='my-2 md:w-full'>
+              <label htmlFor='gender' className="block text-sm font-medium text-gray-300 mb-1 lg:text-2xl">
+                Gender
               </label>
-            </div>
-            <div className="col-2">
-              <label>
-                <input 
-                  type="radio" 
-                  name="gender"
-                  value='MALE'
-                  onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
-                /> Male
-              </label>
-              <label>
-                <input 
-                  type="radio" 
-                  name="gender"
-                  value='FEMALE'
-                  onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
-                /> Female
-              </label>
-              <label>
-                <input 
-                  type="radio" 
-                  name="gender"
-                  value='OTHER'
-                  onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}
-                /> Other
-              </label>
+              <select 
+                id="gender" 
+                name="gender"
+                value={formData.gender}
+                className="bg-transparent border border-gray-300 text-[var(--white)] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:bg-[var(--white)] focus:text-black block w-full p-2.5"
+                onChange={(event) => setFormData({...formData, [event.target.name]:event.target.value })}>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHER">Other</option>
+              </select>
             </div>
           </div>
         </div>
-        <button type="submit">Register</button>
-        <div className="register-link">
-          Already have an account? <Link to="/">Login</Link>
+        <p className='my-2 text-center font-xs text-red-600'>{registerError}</p>
+        <Button type="submit">Register</Button>
+        <div className="text-center py-1 lg:text-lg">
+          Already have an account? <Link className='font-semibold hover:text-[var(--accent-color)]' to="/">Login</Link>
         </div>
-        <p className='login-error'>{registerError}</p>
       </form>
     </div>
   )
