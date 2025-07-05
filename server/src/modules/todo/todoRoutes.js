@@ -6,12 +6,21 @@ const router = express.Router();
 // get todos for user
 router.get('/', async (req, res) => {
   try {
+    
     const todos = await prisma.todo.findMany({
       where: {
         userId: req.userId
+      }, 
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true
       }
-    })
+    });
+
     res.json(todos);
+
   } catch (error) {
     console.log(error.message)
     res.status(503).json({ message: 'Internal server error' });    
@@ -22,12 +31,20 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { title } = req.body;
   try {
+
     const todo = await prisma.todo.create({
       data: {
         title: title,
         userId: req.userId
+      }, 
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true
       }
     })
+    
     res.json(todo);
   } catch (error) {
     console.log(error.message)
@@ -40,6 +57,7 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
   try {
+
     const updatedTodo = await prisma.todo.update({
       where: {
         id: parseInt(id),
@@ -47,8 +65,15 @@ router.put('/:id', async (req, res) => {
       },
       data: {
         title
+      },
+       select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true
       }
     });
+    
     res.json(updatedTodo) 
   } catch (error){
     console.log(error.message)

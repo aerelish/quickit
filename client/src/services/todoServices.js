@@ -68,7 +68,7 @@ export const updateTodo = async (id, title) => {
     )
     
     if (response.data) {
-      return { success: true };
+      return { success: true, data: response.data };
     } else {
       return { success: false, message: 'Something went wrong' };
     }

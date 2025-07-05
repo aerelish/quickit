@@ -33,6 +33,7 @@ model Todo {
   id        Int     @id @default(autoincrement())
   title     String
   completed Boolean @default(false)
-  userId    Int?
-  User      User?   @relation(fields: [userId], references: [id])
+  priority  Int     @default(autoincrement())
+  userId    Int
+  User      User    @relation(fields: [userId], references: [id])
 }

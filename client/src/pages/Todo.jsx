@@ -36,8 +36,8 @@ function Todo() {
     event.preventDefault();
     const response = await addTodo(newTodo);
     if (response.success) { 
+      setTodos([...todos, response.data])
       setNewTodo('');
-      loadTodos();
     } else {
       console.error(response.message);
     };
@@ -46,9 +46,14 @@ function Todo() {
   const updateTodoItem = async (event) => {
     event.preventDefault();
     const response = await updateTodo(editing, updatedTodoTitle);
+    console.log(response.data.id);
     if (response.success) {
       setEditing(null);
-      loadTodos();
+      setTodos(prev =>
+        prev.map(todo =>
+          todo.id === response.data ? { ...todo, title: response.title } : todo
+        )
+      );
     } else {
       console.error(response.message);
     };
@@ -57,7 +62,7 @@ function Todo() {
   const deleteTodoItem = async (id) => {
     const response = await deleteTodo(id);
     if (response.success) {
-      loadTodos();
+      setTodos(todos.filter(todo => todo.id !== id))
     } else {
       console.error(response.message);
     };
