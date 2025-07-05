@@ -6,7 +6,7 @@ import TodoItem from '../components/TodoItem';
 
 // services
 import { validateToken } from '../services/authServices';
-import { getTodos, addTodo, updateTodo, deleteTodo} from '../services/todoServices';
+import { getTodos, addTodo, updateTodo, updateTodoPriority, deleteTodo} from '../services/todoServices';
 
 // context
 import { useAuthContext } from '../context/AuthContext';
@@ -46,7 +46,6 @@ function Todo() {
   const updateTodoItem = async (event) => {
     event.preventDefault();
     const response = await updateTodo(editing, updatedTodoTitle);
-    console.log(response.data.id);
     if (response.success) {
       setEditing(null);
       setTodos(prev =>
@@ -73,24 +72,46 @@ function Todo() {
     setUpdatedTodoTitle(title);
   };
 
-  const moveUp = (index) => {
+  const moveUp = async (index) => {
     if (index === 0) return;
     // copy of todos
     const newTodos = [...todos];
-    // swap indexes for index and index-1
-    // note: index start with 0, so moving up means -1 index
-    [newTodos[index], newTodos[index - 1]] = [newTodos[index - 1], newTodos[index]];
-    setTodos(newTodos);
+    
+    const source = newTodos[index].id;
+    const target = newTodos[index - 1].id;
+
+    // source = todo that you want to increase/decrease in priority
+    // target = todo that you are targeting, e.g. the one above or below
+    const response = await updateTodoPriority(target, source);
+    if (response.success) {
+      // swap indexes for index and index-1
+      // note: index start with 0, so moving up means -1 index
+      [newTodos[index], newTodos[index - 1]] = [newTodos[index - 1], newTodos[index]];    
+      setTodos(newTodos);
+    } else {
+      console.error(response.message);
+    }
   };
 
-  const moveDown = (index) => {
+  const moveDown = async (index) => {
     if (index === todos.length - 1) return;
     // copy of todos
     const newTodos = [...todos];
-    // swap indexes for index and index+1
-    // note: index start with 0, so moving down means +1 index
-    [newTodos[index], newTodos[index + 1]] = [newTodos[index + 1], newTodos[index]];
-    setTodos(newTodos);
+
+    const source = newTodos[index].id;
+    const target = newTodos[index + 1].id;
+    
+    // source = todo that you want to increase/decrease in priority
+    // target = todo that you are targeting, e.g. the one above or below
+    const response = await updateTodoPriority(source, target);
+    if (response.success) {
+      // swap indexes for index and index-1
+      // note: index start with 0, so moving up means -1 index
+      [newTodos[index], newTodos[index + 1]] = [newTodos[index + 1], newTodos[index]];    
+      setTodos(newTodos);
+    } else {
+      console.error(response.message);
+    };
   };
 
   useEffect(() => { loadTodos() }, []);

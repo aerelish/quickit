@@ -30,10 +30,11 @@ model User {
 }
 
 model Todo {
-  id        Int     @id @default(autoincrement())
-  title     String
-  completed Boolean @default(false)
-  priority  Int     @default(autoincrement())
-  userId    Int
-  User      User    @relation(fields: [userId], references: [id])
+  id              Int      @id @default(autoincrement())
+  title           String
+  completed       Boolean  @default(false)
+  priority        Int      @default(0)
+  createdDateTime DateTime @default(now())
+  userId          Int
+  User            User     @relation(fields: [userId], references: [id])
 }
