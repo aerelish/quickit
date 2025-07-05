@@ -6,12 +6,25 @@ const router = express.Router();
 // get todos for user
 router.get('/', async (req, res) => {
   try {
+    
     const todos = await prisma.todo.findMany({
       where: {
         userId: req.userId
-      }
-    })
+      }, 
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true
+      },
+      orderBy: [
+        { priority: 'asc' },
+        { createdDateTime: 'desc' }
+      ],
+    });
+
     res.json(todos);
+
   } catch (error) {
     console.log(error.message)
     res.status(503).json({ message: 'Internal server error' });    
@@ -22,12 +35,32 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { title } = req.body;
   try {
+
+    const maxPriority = await prisma.todo.aggregate({
+      _max: { 
+        priority: true },
+      where: {
+        userId: req.userId
+      }
+    });
+
+    const priority = (maxPriority._max.priority ?? 0) + 1;
+
     const todo = await prisma.todo.create({
       data: {
         title: title,
-        userId: req.userId
+        userId: req.userId,
+        priority
+      }, 
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true,
+        createdDateTime: true,
       }
     })
+    
     res.json(todo);
   } catch (error) {
     console.log(error.message)
@@ -35,11 +68,39 @@ router.post('/', async (req, res) => {
   }
 });
 
+// update todo priority
+router.put('/swap', async(req, res) => {
+  // source = todo that you want to increase/decrease in priority
+  // target = todo that you are targeting, e.g. the one above or below
+  const { source, target } = req.body
+  try {
+
+    const [todoSource, todoTarget] = await prisma.$transaction([
+      // updating source
+      prisma.todo.update({
+        where: { id: source, userId: req.userId },
+        data: { priority: target }
+      }),
+      // updating target
+      prisma.todo.update({
+        where: { id: target, userId: req.userId},
+        data: { priority: source }
+      })
+    ]);
+
+    res.json([todoSource, todoTarget])
+  } catch (error) {
+    console.log(error.message)
+    res.status(503).json({ message: 'Internal server error' }); 
+  };
+});
+
 // update todo
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
   try {
+
     const updatedTodo = await prisma.todo.update({
       where: {
         id: parseInt(id),
@@ -47,8 +108,15 @@ router.put('/:id', async (req, res) => {
       },
       data: {
         title
+      },
+       select: {
+        id: true,
+        title: true,
+        completed: true,
+        priority: true
       }
     });
+    
     res.json(updatedTodo) 
   } catch (error){
     console.log(error.message)
@@ -56,6 +124,9 @@ router.put('/:id', async (req, res) => {
   }
 }) 
 
+
+
+// delete todo
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -71,5 +142,6 @@ router.delete('/:id', async (req, res) => {
     res.status(503).json({ success: false, message: 'Internal server error' });  
   }
 })
+
 
 export default router;
