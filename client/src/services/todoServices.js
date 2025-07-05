@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
+// get all todo for user
 export const getTodos = async () => {
   const token = localStorage.getItem('token');
   if (!token) return { success: false, message: 'Authentication token not found' };
@@ -29,6 +30,7 @@ export const getTodos = async () => {
   };
 };
 
+// add new todo for user
 export const addTodo = async (title) => {
   const token = localStorage.getItem('token');
   if (!token) return { success: false, message: 'Authentication token not found' };
@@ -54,6 +56,7 @@ export const addTodo = async (title) => {
   };  
 };
 
+// update selected todo for  user
 export const updateTodo = async (id, title) => {
   const token = localStorage.getItem('token');
   if (!token) return { success: false, message: 'Authentication token not found' };
@@ -65,12 +68,39 @@ export const updateTodo = async (id, title) => {
           Authorization: `Bearer ${token}`
         }
       }
-    )
+    );
     
     if (response.data) {
-      return { success: true };
+      return { success: true, data: response.data };
     } else {
       return { success: false, message: 'Something went wrong' };
+    };
+
+  } catch (error) {
+    return { success: false, message: error.response?.data?.message || 'Something went wrong' }
+  }
+};
+
+// update priority (swap up/down) for user
+// source = todo that you want to increase/decrease in priority
+// target = todo that you are targeting, e.g. the one above or below
+export const updateTodoPriority = async ( source, target ) => {
+  const token = localStorage.getItem('token');
+  if (!token) return { success: false, message: 'Authentication token not found' };
+  try {
+    const response = await axios.put(`${API_URL}/api/todo/swap`,
+      { source, target}, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      } 
+    );
+
+    if (response.data) {
+      return { success: true, data: response.data };
+    } else {
+       return { success: false, message: 'Something went wrong' };
     }
 
   } catch (error) {
@@ -78,6 +108,7 @@ export const updateTodo = async (id, title) => {
   }
 };
 
+// deleted selected todo for user
 export const deleteTodo = async (id) => {
   const token = localStorage.getItem('token');
   if (!token) return { success: false, message: 'Authentication token not found' };
