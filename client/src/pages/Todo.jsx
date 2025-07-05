@@ -50,7 +50,7 @@ function Todo() {
       setEditing(null);
       setTodos(prev =>
         prev.map(todo =>
-          todo.id === response.data ? { ...todo, title: response.title } : todo
+          todo.id === response.data.id ? { ...todo, title: response.data.title } : todo
         )
       );
     } else {
