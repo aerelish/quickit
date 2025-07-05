@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan'
 import apiRoutes from './routes/apiRoutes.js'
 
 // initializing express
@@ -12,11 +13,11 @@ const PORT = process.env.PORT || 8080
 const DOMAIN = process.env.DOMAIN || `http://localhost:${PORT}`
 
 // middlewares
-app.use(cors());
-app.use(express.json());
+app.use(cors());                // for cross-origin resource sharing for all routes
+app.use(morgan('combined'));    // log incoming http requests
+app.use(express.json());        // parse incoming requests with JSON payloads
 
 // routes
-
 app.use('/api', apiRoutes);
 
 // listen to app
