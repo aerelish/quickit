@@ -1,5 +1,7 @@
 // packages and stuff
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { faArrowUp, faArrowDown, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 // services
@@ -33,12 +35,15 @@ function TodoItem({
 
   return (
     <div className='flex justify-between items-center border-b border-zinc-700 py-1.5 my-3'>
-      <h3 
-        className={`cursor-pointer px-0.5 ${isCompleted && 'line-through text-zinc-500'}`} 
-        onClick={() => setTodoCompleted(todoItem.id, todoItem.completed)}
-      >
-        {todo.title} 
-      </h3>
+      <div className='pl-0.5 flex gap-1 items-center'>
+        {todoItem.completed && <FontAwesomeIcon className='text-green-400 text-base' icon={faCircleCheck} />}
+        <h3 
+          className={`cursor-pointer px-0.5 ${isCompleted && 'line-through text-zinc-500'}`} 
+          onClick={() => setTodoCompleted(todoItem.id, todoItem.completed)}
+        >
+          {todo.title} 
+        </h3>
+      </div>
       <div className='flex gap-1.5 pr-1 items-center'>   
         <ButtonIcon
           icon={faArrowUp}
