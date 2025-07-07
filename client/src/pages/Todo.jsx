@@ -43,6 +43,8 @@ function Todo() {
     };
   };
 
+  // TODO - try to move this to TodoItem instead
+
   const updateTodoItem = async (event) => {
     event.preventDefault();
     const data = { title: updatedTodoTitle }
@@ -59,6 +61,8 @@ function Todo() {
     };
   };
 
+  // TODO - try to move this to TodoItem instead
+
   const deleteTodoItem = async (id) => {
     const response = await deleteTodo(id);
     if (response.success) {
@@ -67,6 +71,8 @@ function Todo() {
       console.error(response.message);
     };
   };  
+
+  // TODO - try to move this to TodoItem instead
 
   const moveUp = async (index) => {
     if (index === 0) return;
@@ -89,6 +95,8 @@ function Todo() {
     }
   };
 
+  // TODO - try to move this to TodoItem instead
+
   const moveDown = async (index) => {
     if (index === todos.length - 1) return;
     // copy of todos
@@ -96,7 +104,7 @@ function Todo() {
 
     const source = newTodos[index].id;
     const target = newTodos[index + 1].id;
-    
+
     // source = todo that you want to increase/decrease in priority
     // target = todo that you are targeting, e.g. the one above or below
     const response = await updateTodoPriority(source, target);
@@ -109,6 +117,8 @@ function Todo() {
       console.error(response.message);
     };
   };
+
+  // TODO - try to move this to TodoItem instead
 
   // for indicating that user is editing a todo item
   const editTodoItem = (id, title) => { 

@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
         priority: true
       },
       orderBy: [
+        { completed: 'asc'},
         { priority: 'asc' },
         { createdDateTime: 'desc' }
       ],
@@ -74,17 +75,32 @@ router.put('/swap', async(req, res) => {
   // target = todo that you are targeting, e.g. the one above or below
   const { source, target } = req.body
   try {
+    
+    // get sourceTodo and targeTodo
+    const [sourceTodo, targetTodo] = await prisma.todo.findMany({
+      where: {
+        id: { in: [source, target] },
+        userId: req.userId,
+      },
+      select: { id: true, priority: true },
+    });
 
+    // check if both exist
+    if (sourceTodo == null || targetTodo == null) {
+      return res.status(404).json({ message: 'One or both todos not found' });
+    }
+
+    // swap values
     const [todoSource, todoTarget] = await prisma.$transaction([
       // updating source
       prisma.todo.update({
         where: { id: source, userId: req.userId },
-        data: { priority: target }
+        data: { priority: targetTodo.priority }
       }),
       // updating target
       prisma.todo.update({
         where: { id: target, userId: req.userId},
-        data: { priority: source }
+        data: { priority: sourceTodo.priority }
       })
     ]);
 
