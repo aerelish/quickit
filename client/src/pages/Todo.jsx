@@ -45,7 +45,8 @@ function Todo() {
 
   const updateTodoItem = async (event) => {
     event.preventDefault();
-    const response = await updateTodo(editing, updatedTodoTitle);
+    const data = { title: updatedTodoTitle }
+    const response = await updateTodo(editing, data);
     if (response.success) {
       setEditing(null);
       setTodos(prev =>
@@ -65,12 +66,7 @@ function Todo() {
     } else {
       console.error(response.message);
     };
-  };
-
-  const editTodoItem = (id, title) => { 
-    setEditing(id);
-    setUpdatedTodoTitle(title);
-  };
+  };  
 
   const moveUp = async (index) => {
     if (index === 0) return;
@@ -112,6 +108,12 @@ function Todo() {
     } else {
       console.error(response.message);
     };
+  };
+
+  // for indicating that user is editing a todo item
+  const editTodoItem = (id, title) => { 
+    setEditing(id);
+    setUpdatedTodoTitle(title);
   };
 
   useEffect(() => { loadTodos() }, []);
