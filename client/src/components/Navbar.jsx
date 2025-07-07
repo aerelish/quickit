@@ -24,7 +24,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="top-1 z-40">
+    <nav className="top-1 z-40 lg:py-[1em]">
       <SectionWrapper>
         <div className="flex justify-between items-center">
           <Link className="flex items-center gap-2" to="/">

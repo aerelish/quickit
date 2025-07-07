@@ -33,8 +33,8 @@ function App() {
           <Navigate to='/login' /> 
         ) : (
           <ProtectedRoute>
-            <Navbar/>
             <main className='w-screen h-screen'>
+              <Navbar/>
               <div className='w-full bg-[var(--white)] text-[var(--black)]'>
                 <SectionWrapper>
                   <Hero/>
@@ -43,9 +43,13 @@ function App() {
               <div className='w-full'>
                 <SectionWrapper>
                   <ActionSelect/>
-                  <div className='flex flex-col'>
-                    <Todos/>
-                    <Notes/>
+                  <div className='flex flex-col justify-center align-baseline lg:flex-row lg:gap-8'>
+                    <div className='flex-1'>
+                      <Todos/>
+                    </div>
+                    <div className='flex-1'>
+                      <Notes/>
+                    </div>
                   </div>
                 </SectionWrapper>
               </div>
