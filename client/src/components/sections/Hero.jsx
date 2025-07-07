@@ -2,7 +2,7 @@ import Budget from './Budget';
 
 function Hero() {
   return (
-    <div className="mt-4 py-4 px-3 md:px-8 lg:px-24 max-w-7xl mx-auto flex flex-col">
+    <>
       <div>
         <h1 className="text-2xl font-medium">
           Hello [User]
@@ -12,7 +12,7 @@ function Hero() {
         </p>  
       </div>
       {/* <Budget/> */}
-    </div>
+    </>
   )
 }
 

@@ -5,7 +5,7 @@ function ActionSelect() {
   const [selected, setSelected] = useState('Todo')
 
   return (
-    <div className='max-w-7xl mx-auto flex gap-2 text-sm'>
+    <div className='flex gap-2 text-sm'>
       <h3 
         className={`cursor-pointer ${selected === 'Todo' ? 'text-[var(--accent-color)]' : 'text-zinc-500'}`}
         onClick={() => setSelected('Todo')}
