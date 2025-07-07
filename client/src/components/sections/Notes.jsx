@@ -1,5 +1,5 @@
 import { sampleNotes } from "../../data/sampleNotes"
-import NoteItem from "../NoteItem";
+import NoteItem from "../note/NoteItem";
 
 function Notes() {
 
@@ -12,6 +12,7 @@ function Notes() {
         {notesData.map((note) => {
           return (
             <NoteItem 
+              key={note.id}
               note={note}
             />
         )})}

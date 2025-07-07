@@ -1,4 +1,4 @@
-import Budget from '../Budget';
+import Budget from './Budget';
 
 function Hero() {
   return (
@@ -11,7 +11,7 @@ function Hero() {
           Hope you're doing well! Just a quick heads-up — the weather will be [weather] today.
         </p>  
       </div>
-      <Budget/>
+      {/* <Budget/> */}
     </div>
   )
 }

@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 
 // components
-import TodoItem from '../TodoItem';
-import TodoForm from '../TodoForm';
+import TodoItem from '../todo/TodoItem';
+import TodoForm from '../todo/TodoForm';
 
 // services
 import { validateToken } from '../../services/authServices';

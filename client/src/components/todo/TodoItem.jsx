@@ -5,10 +5,10 @@ import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { faArrowUp, faArrowDown, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 // services
-import { updateTodo } from '../services/todoServices';
+import { updateTodo } from '../../services/todoServices';
 
 // components
-import ButtonIcon from './ButtonIcon'
+import ButtonIcon from '../ButtonIcon'
 
 function TodoItem({
   todo, 
