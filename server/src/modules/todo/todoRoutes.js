@@ -98,7 +98,7 @@ router.put('/swap', async(req, res) => {
 // update todo
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
+  const { data, title } = req.body;
   try {
 
     const updatedTodo = await prisma.todo.update({
@@ -106,9 +106,7 @@ router.put('/:id', async (req, res) => {
         id: parseInt(id),
         userId: req.userId
       },
-      data: {
-        title
-      },
+      data: data,
        select: {
         id: true,
         title: true,
@@ -123,8 +121,6 @@ router.put('/:id', async (req, res) => {
     res.status(503).json({ message: 'Internal server error' }); 
   }
 }) 
-
-
 
 // delete todo
 router.delete('/:id', async (req, res) => {
