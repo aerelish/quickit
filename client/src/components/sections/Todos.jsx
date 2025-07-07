@@ -2,18 +2,22 @@
 import { useState, useEffect } from 'react';
 
 // components
-import TodoItem from '../components/TodoItem';
+import TodoItem from '../TodoItem';
+import TodoForm from '../TodoForm';
 
 // services
-import { validateToken } from '../services/authServices';
-import { getTodos, addTodo, updateTodo, updateTodoPriority, deleteTodo} from '../services/todoServices';
+import { validateToken } from '../../services/authServices';
+import { getTodos, addTodo, updateTodo, updateTodoPriority, deleteTodo} from '../../services/todoServices';
+
+// custom hooks
+import { useScreen } from '../../hooks/useScreen';
 
 // context
-import { useAuthContext } from '../context/AuthContext';
-import TodoForm from '../components/TodoForm';
+import { useAuthContext } from '../../context/AuthContext';
 
-function Todo() {
+function Todos() {
   
+  // custom context
   const { isTokenValid, setIsTokenValid } = useAuthContext();
 
   // initialize hooks
@@ -22,6 +26,10 @@ function Todo() {
   const [updatedTodoTitle, setUpdatedTodoTitle] = useState('');
   const [editing, setEditing] = useState(0);
 
+  // custom hooks
+  const { isMobile } = useScreen();
+
+
   const loadTodos = async () => {
     if (!isTokenValid) {
       const isValid = await validateToken();
@@ -29,7 +37,7 @@ function Todo() {
       setIsTokenValid(isValid);
     }
     const response = await getTodos();
-    if (response.success) setTodos(response.data)
+    if (response.success) { setTodos(response.data) };
   };
 
   const addTodoItem = async (event) => {
@@ -129,7 +137,7 @@ function Todo() {
   useEffect(() => { loadTodos() }, []);
 
   return (
-    <div className=''>
+    <div className='flex flex-col justify-center items-center'>
       <TodoForm 
         onSubmit={addTodoItem}
         placeholder='have something todo?'
@@ -139,7 +147,7 @@ function Todo() {
         icon={'faArrowRight'}
       />
       <div className='w-full'>
-        {todos.map((todo, index) => (
+        {todos.slice(0, isMobile ? 3 : todos.length).map((todo, index) => (
           todo.id === editing ? (
             <TodoForm
               key={todo.id}
@@ -161,9 +169,12 @@ function Todo() {
             />
           )
         ))}
+        { isMobile && todos.length > 3 && (
+          <p className='text-zinc-400 cursor-pointer'>view more...</p>
+        )}
       </div>
     </div>
   )
 };
 
-export default Todo
+export default Todos
