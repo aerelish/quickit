@@ -1,19 +1,10 @@
-// import packages here
 import { Routes, Route, Navigate } from 'react-router-dom';
-
-// import components here
+import { useAuthContext } from './context/AuthContext';
+import AppLayout from '@/components/layouts/AppLayout';
+import HomePage from '@/pages/HomePage';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import Navbar from '@/components/Navbar';
-import Hero from '@/components/sections/Hero';
-import ActionSelect from '@/components/ActionSelect';
-import Todos from '@/components/sections/Todos';
-import Notes from '@/components/sections/Notes';
-import SectionWrapper from '@/components/SectionWrapper';
-
-// import context
-import { useAuthContext } from './context/AuthContext';
 
 function App() {
   
@@ -33,9 +24,9 @@ function App() {
           <Navigate to='/login' /> 
         ) : (
           <ProtectedRoute>
-            <main className='w-screen h-screen'>
-              <Navbar/>
-              <div className='w-full bg-[var(--white)] text-[var(--black)]'>
+            <AppLayout>
+              <HomePage/>
+              {/* <div className='w-full bg-[var(--white)] text-[var(--black)]'>
                 <SectionWrapper>
                   <Hero/>
                 </SectionWrapper>
@@ -52,14 +43,19 @@ function App() {
                     </div>
                   </div>
                 </SectionWrapper>
-              </div>
-            </main>   
+              </div> */}
+            </AppLayout>   
           </ProtectedRoute>
         )
       } />
 
       {/* Login Route */}
-      <Route path="/login" element={<Login/>} />
+      <Route 
+        path="/login" 
+        element={
+          <Login/>
+        } 
+      />
 
       {/* Register Route */}
       <Route path="/register" element={<Register/>} />

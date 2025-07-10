@@ -1,9 +1,9 @@
 import Budget from './Budget';
 
-function Hero() {
+function HeroSection() {
   return (
-    <div className='my-[.75em] md:my-[1em] lg:my-[2em]'>
-      <div className=''>
+    <div className='bg-[var(--white)] text-[var(--black)]'>
+      <div className='px-4 max-w-screen-xl mx-auto py-[.75em] md:py-[1em] lg:py-[2em]'>
         <h1 className="text-2xl font-medium lg:text-4xl">
           Hello [User]
         </h1>
@@ -11,9 +11,8 @@ function Hero() {
           Hope you're doing well! Just a quick heads-up — the weather will be [weather] today.
         </p>  
       </div>
-      {/* <Budget/> */}
     </div>
   )
 }
 
-export default Hero
+export default HeroSection
