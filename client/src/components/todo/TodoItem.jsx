@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
@@ -58,7 +59,7 @@ function TodoItem({
   const handleUpdateTodoChange = (event) => { setTodoInput(event.target.value) }
 
   return (
-    <div className='flex justify-between items-center border-b border-zinc-700 py-1.5 my-3'>
+    <div className='group flex flex-col gap-3 justify-between items-baseline px-2 py-3 border-b border-zinc-700'>
       { todoItem.id === editing ? (
           <TodoForm
             onSubmit={updateTodoItem}
@@ -69,16 +70,16 @@ function TodoItem({
           />
         ) : (
           <>
-            <div className='pl-0.5 flex gap-1 items-center'>
-              {todoItem.completed && <FontAwesomeIcon className='text-green-400 text-base' icon={faCircleCheck} />}
+            <div className="flex flex-col items-start gap-1 w-full">
+              {todoItem.completed && <FontAwesomeIcon className='pl-0.5 mb-1 text-green-400 text-base flex-shrink-0' icon={faCircleCheck} />}
               <h3 
-                className={`cursor-pointer px-0.5 ${isCompleted && 'line-through text-zinc-500'}`} 
+                className={clsx("break-words whitespace-normal w-full cursor-pointer px-0.5", isCompleted && "line-through text-zinc-500")} 
                 onClick={() => setTodoCompleted(todoItem.id, todoItem.completed)}
               >
                 {todoItem.title} 
               </h3>
             </div>
-            <div className='flex gap-1.5 pr-1 items-center'>   
+            <div className='w-full flex gap-1.5 justify-end pr-1 items-center'>
               <ButtonIcon
                 icon={faArrowUp}
                 onClick={() => moveUp(index)}
@@ -88,7 +89,7 @@ function TodoItem({
                 icon={faArrowDown}
                 onClick={() => moveDown(index)}
                 hoverColor='[var(--white)]'
-              />       
+              /> 
               <ButtonIcon
                 icon={faPenToSquare}
                 onClick={() => editTodoItem(todoItem.id, todoItem.title)}
@@ -98,7 +99,7 @@ function TodoItem({
                 icon={faTrash}
                 onClick={() => deleteTodoItem(todoItem.id)}
                 hoverColor='red-500'
-              />       
+              />      
             </div>
           </>
         )
