@@ -3,7 +3,7 @@ import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import InputField from "../InputField"
-import ButtonIcon from '../ButtonIcon';
+import ButtonIcon from '../ButtonIcon'
 
 function TodoForm({ 
   onSubmit, 
