@@ -1,6 +1,10 @@
+import TodoList from "@/components/todo/TodoList"
+
 function TodosSection() {
   return (
-    <div>TodosSection</div>
+    <div className="">
+      <TodoList/>
+    </div>
   )
 }
 

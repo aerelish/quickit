@@ -1,6 +1,6 @@
 function NotesSection() {
   return (
-    <div>NotesSection</div>
+    <div className="">NotesSection</div>
   )
 }
 
