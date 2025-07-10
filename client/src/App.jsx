@@ -2,15 +2,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // import components here
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
-import Hero from './components/sections/Hero';
-import ActionSelect from './components/ActionSelect';
-import Todos from './components/sections/Todos';
-import Notes from './components/sections/Notes';
-import SectionWrapper from './components/SectionWrapper';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/sections/Hero';
+import ActionSelect from '@/components/ActionSelect';
+import Todos from '@/components/sections/Todos';
+import Notes from '@/components/sections/Notes';
+import SectionWrapper from '@/components/SectionWrapper';
 
 // import context
 import { useAuthContext } from './context/AuthContext';
