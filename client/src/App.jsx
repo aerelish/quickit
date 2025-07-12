@@ -1,19 +1,10 @@
-// import packages here
 import { Routes, Route, Navigate } from 'react-router-dom';
-
-// import components here
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import Navbar from '@/components/Navbar';
-import Hero from '@/components/sections/Hero';
-import ActionSelect from '@/components/ActionSelect';
-import Todos from '@/components/sections/Todos';
-import Notes from '@/components/sections/Notes';
-import SectionWrapper from '@/components/SectionWrapper';
-
-// import context
 import { useAuthContext } from './context/AuthContext';
+import AppLayout from '@/layouts/AppLayout';
+import HomePage from '@/pages/HomePage';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
 
 function App() {
   
@@ -33,36 +24,18 @@ function App() {
           <Navigate to='/login' /> 
         ) : (
           <ProtectedRoute>
-            <main className='w-screen h-screen'>
-              <Navbar/>
-              <div className='w-full bg-[var(--white)] text-[var(--black)]'>
-                <SectionWrapper>
-                  <Hero/>
-                </SectionWrapper>
-              </div>
-              <div className='w-full'>
-                <SectionWrapper>
-                  <ActionSelect/>
-                  <div className='flex flex-col justify-center align-baseline lg:flex-row lg:gap-8'>
-                    <div className='flex-1'>
-                      <Todos/>
-                    </div>
-                    <div className='flex-1'>
-                      <Notes/>
-                    </div>
-                  </div>
-                </SectionWrapper>
-              </div>
-            </main>   
+            <AppLayout>
+              <HomePage/>
+            </AppLayout>   
           </ProtectedRoute>
         )
       } />
 
       {/* Login Route */}
-      <Route path="/login" element={<Login/>} />
+      <Route path="/login" element={<LoginPage/>} />
 
       {/* Register Route */}
-      <Route path="/register" element={<Register/>} />
+      <Route path="/register" element={<RegisterPage/>} />
   
     </Routes>
   )

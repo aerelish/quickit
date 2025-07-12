@@ -12,7 +12,7 @@ import { login } from '../services/authServices';
 // context
 import { useAuthContext } from '../context/AuthContext';
 
-function Login() {
+function LoginPage() {
 
   const navigate = useNavigate();
   const { setIsLoggedIn, setIsTokenValid } = useAuthContext()
@@ -67,4 +67,4 @@ function Login() {
   );
 };
 
-export default Login;
+export default LoginPage;
