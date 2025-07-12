@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAuthContext } from '@/context/AuthContext';
+import { useAppContext } from '@/context/AppContext';
 import { useScreen } from '@/hooks/useScreen';
 import { validateToken } from '@/services/authServices';
-import { getTodos, addTodo, updateTodoPriority } from '@/services/todoServices';
+import { getTodos, updateTodoPriority } from '@/services/todoServices';
 import TodoItem from '@/components/todo/TodoItem';
-import TodoForm from '@/components/todo/TodoForm';
 
 function TodoList() {
 
-  const [todos, setTodos] = useState([])
-  const [newTodo, setNewTodo] = useState('');
-  const [editing, setEditing] = useState(0);
-
   const { isTokenValid, setIsTokenValid } = useAuthContext();
+  const { todos, setTodos } = useAppContext();
+
   const { isMobile } = useScreen();
 
   const loadTodos = async () => {
@@ -23,17 +21,6 @@ function TodoList() {
     }
     const response = await getTodos();
     if (response.success) { setTodos(response.data) };
-  };
-
-  const addTodoItem = async (event) => {
-    event.preventDefault();
-    const response = await addTodo(newTodo);
-    if (response.success) { 
-      setTodos([...todos, response.data])
-      setNewTodo('');
-    } else {
-      console.error(response.message);
-    };
   };
   
   const onDeleteSuccess = (deletedId) => {
@@ -69,8 +56,12 @@ function TodoList() {
 
   useEffect(() => { loadTodos() }, []);
 
+  useEffect(() => {
+    setTodos(todos)
+  } ,[todos])
+
   return (
-    <div className='w-full min-w-0 border border-zinc-600 rounded-lg'>
+    <div className='w-full min-w-0'>
       {todos.slice(0, isMobile ? 3 : todos.length).map((todo, index) => (
         <TodoItem
           key={todo.id}

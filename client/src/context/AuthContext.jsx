@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { validateToken } from '../services/authServices';
+import { validateToken } from '@/services/authServices';
 
 const AuthContext = createContext();
 

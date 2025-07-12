@@ -1,21 +1,20 @@
+import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
-import { faArrowRight, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from '@tiptap/extension-placeholder';
-import ButtonIcon from "@/components/ButtonIcon";
 import MenuBar from "@/components/texteditor/MenuBar";
+import ButtonIcon from "@/components/ButtonIcon";
+import icons from "@/lib/icons";
 
-const TipTapTextEditor = ({ 
-  setDescription, 
-  icon,
+const TipTapTextEditor = ({
+  onSubmit, 
+  content = "",
   placeholder,
+  icon = 'faArrowRight',
 }) => {
 
-  const icons = {
-    faArrowRight,
-    faFloppyDisk,
-  }
+  const [ editorContent, setEditorContent ] = useState(content);
 
   const editor = useEditor({
     extensions: [
@@ -27,20 +26,43 @@ const TipTapTextEditor = ({
         showOnlyCurrent: false, // show for all empty nodes
       }),
     ],
-    content: '',
+    content: editorContent,
     editorProps: {
       attributes: {
         class: "prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
       }
     },
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      setDescription(html);
+      // const html = editor.getHTML();
+      const text = editor.getText();
+      setEditorContent(text);
     },
   });
 
+  useEffect(() => {
+    if (!editor) return;
+    const placeholderExt = editor.extensionManager.extensions.find(
+      ext => ext.name === "placeholder"
+    );
+    if (placeholderExt) {
+      placeholderExt.options.placeholder = placeholder;
+      editor.commands.focus(); // Optional
+    };
+  }, [placeholder, editor]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    onSubmit(editorContent);
+    
+    if (!editor) return;
+    editor.commands.clearContent();
+    setEditorContent("");
+
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-.5">
       <EditorContent editor={editor} />
       <div className="flex justify-between items-center">
         <MenuBar editor={editor} className="text-base text-zinc-400" />
@@ -48,8 +70,8 @@ const TipTapTextEditor = ({
           icon={icons[icon]}
           className='text-lg text-zinc-400 cursor-pointer'
         />
-      </div>      
-    </>
+      </div>  
+    </form>
   );
 };
 
