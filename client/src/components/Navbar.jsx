@@ -1,16 +1,8 @@
-// packages
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
-
-// components
-import SectionWrapper from "./SectionWrapper";
-
-// context
-import { useAuthContext } from "../context/AuthContext";
-
-// others
-import Logo from '../assets/logo_light.png'
+import { useAuthContext } from "@/context/AuthContext";
+import Logo from '@/assets/logo_light.png'
 
 function Navbar() {
 
