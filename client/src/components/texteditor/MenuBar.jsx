@@ -5,6 +5,22 @@ import {
   LuUnderline
 } from "react-icons/lu";
 
+const MenuBarButton = ({
+  children, 
+  onClick,
+  isActive
+}) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`p-1.5 rounded cursor-pointer transition-colors duration-150 ${isActive ? "bg-[var(--accent-color)] text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
+    >
+      {children}
+    </button>
+  )
+}
+
 const MenuBar = ({ 
   editor,
   className
@@ -16,24 +32,24 @@ const MenuBar = ({
 
   return (
     <div className={`flex justify-start items-baseline gap-1 ${className}`}>
-      <button
+      <MenuBarButton
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is_active" : ""}
+        isActive={editor.isActive("bold")}
       >
         <LuBold />
-      </button>
-      <button
+      </MenuBarButton>
+      <MenuBarButton
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is_active" : ""}
+        isActive={editor.isActive("italic")}
       >
         <LuItalic />
-      </button>
-      <button
+      </MenuBarButton>
+      <MenuBarButton
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={editor.isActive("underline") ? "is_active" : ""}
+        isActive={editor.isActive("underline")}
       >
         <LuUnderline />
-      </button>
+      </MenuBarButton>
     </div>
   );
 };

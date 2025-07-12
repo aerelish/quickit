@@ -29,7 +29,7 @@ const TipTapTextEditor = ({
     content: editorContent,
     editorProps: {
       attributes: {
-        class: "prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
+        class: "pl-0.5 prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
       }
     },
     onUpdate: ({ editor }) => {
@@ -62,7 +62,7 @@ const TipTapTextEditor = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-.5">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-1 p-.5">
       <EditorContent editor={editor} />
       <div className="flex justify-between items-center">
         <MenuBar editor={editor} className="text-base text-zinc-400" />
