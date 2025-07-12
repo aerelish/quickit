@@ -29,7 +29,7 @@ const TipTapTextEditor = ({
     content: editorContent,
     editorProps: {
       attributes: {
-        class: "prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
+        class: "pl-0.5 prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
       }
     },
     onUpdate: ({ editor }) => {
