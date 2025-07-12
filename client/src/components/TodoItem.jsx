@@ -34,17 +34,17 @@ function TodoItem({
   };
 
   return (
-    <div className='flex justify-between items-center border-b border-zinc-700 py-1.5 my-3'>
-      <div className='pl-0.5 flex gap-1 items-center'>
+    <div className='flex flex-col gap-4 justify-between items-baseline py-3 border-b border-zinc-700 '>
+      <div className='pl-0.5 flex flex-col gap-2 justify-center items-start w-full min-w-0'>
         {todoItem.completed && <FontAwesomeIcon className='text-green-400 text-base' icon={faCircleCheck} />}
         <h3 
-          className={`cursor-pointer px-0.5 ${isCompleted && 'line-through text-zinc-500'}`} 
+          className={`break-words whitespace-normal w-full cursor-pointer px-0.5 ${isCompleted && 'line-through text-zinc-500'}`} 
           onClick={() => setTodoCompleted(todoItem.id, todoItem.completed)}
         >
           {todo.title} 
         </h3>
       </div>
-      <div className='flex gap-1.5 pr-1 items-center'>   
+      <div className='w-full flex gap-1.5 justify-end pr-1 items-center'>   
         <ButtonIcon
           icon={faArrowUp}
           onClick={() => moveUp(index)}
