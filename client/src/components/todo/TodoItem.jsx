@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import clsx from 'clsx';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
@@ -75,13 +74,11 @@ function TodoItem({
               {todoItem.completed && <FontAwesomeIcon className='pl-0.5 mb-1 text-green-400 text-base flex-shrink-0' icon={faCircleCheck} />}
               <h3 
                 className={clsx("break-words whitespace-normal w-full cursor-pointer px-0.5", isCompleted && "line-through text-zinc-500")} 
-                className={clsx("break-words whitespace-normal w-full cursor-pointer px-0.5", isCompleted && "line-through text-zinc-500")} 
                 onClick={() => setTodoCompleted(todoItem.id, todoItem.completed)}
               >
                 {todoItem.title} 
               </h3>
             </div>
-            <div className='w-full flex gap-1.5 justify-end pr-1 items-center'>
             <div className='w-full flex gap-1.5 justify-end pr-1 items-center'>
               <ButtonIcon
                 icon={faArrowUp}
@@ -93,7 +90,6 @@ function TodoItem({
                 onClick={() => moveDown(index)}
                 hoverColor='[var(--white)]'
               /> 
-              /> 
               <ButtonIcon
                 icon={faPenToSquare}
                 onClick={() => editTodoItem(todoItem.id, todoItem.title)}
@@ -103,7 +99,6 @@ function TodoItem({
                 icon={faTrash}
                 onClick={() => deleteTodoItem(todoItem.id)}
                 hoverColor='red-500'
-              />      
               />      
             </div>
           </>
