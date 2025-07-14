@@ -57,7 +57,7 @@ function TodoItem({
 
   if (editing) {
     return (
-      <div className='px-3 py-2 border-b border-[var(--accent-color)]'>
+      <div className='px-3 py-2 border border-[var(--accent-color)]'>
         <TipTapTextEditor
           onSubmit={updateTodoItem}
           content={todoItem.title}

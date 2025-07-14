@@ -21,6 +21,7 @@
     "@tiptap/starter-kit": "^2.25.0",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
+    "dompurify": "^3.2.6",
     "html-react-parser": "^5.2.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -27,6 +27,7 @@ model User {
   birthdate DateTime
   gender    Gender
   todo      Todo[]
+  note      Note[]
 }
 
 model Todo {
@@ -35,6 +36,18 @@ model Todo {
   completed       Boolean  @default(false)
   priority        Int      @default(0)
   createdDateTime DateTime @default(now())
-  userId          Int
-  User            User     @relation(fields: [userId], references: [id])
+
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Note {
+  id        Int       @id @default(autoincrement())
+  index     Int       @default(0)
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
 }

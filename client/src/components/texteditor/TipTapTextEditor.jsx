@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
+import DOMPurify from 'dompurify';
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from '@tiptap/extension-placeholder';
 import MenuBar from "@/components/texteditor/MenuBar";
 import ButtonIcon from "@/components/ButtonIcon";
 import icons from "@/lib/icons";
+import { STR_TODO } from "@/lib/constants";
 
 const TipTapTextEditor = ({
   onSubmit, 
-  content = "",
+  type = STR_TODO,
   placeholder,
+  content = "",
   icon = 'faArrowRight',
 }) => {
 
@@ -18,24 +21,30 @@ const TipTapTextEditor = ({
 
   const editor = useEditor({
     extensions: [
-      StarterKit, 
+      StarterKit,
       Underline,
       Placeholder.configure({
-        placeholder: placeholder,
+        showOnlyCurrent: false,
         showOnlyWhenEditable: true,
-        showOnlyCurrent: false, // show for all empty nodes
+        placeholder: ({ node }) => {
+          if (type === STR_TODO) return placeholder;
+          if (node.type.name === "heading") return "Title";
+          if (node.type.name === "paragraph") return placeholder;
+          return null;
+        },
       }),
     ],
-    content: editorContent,
+    content,
     editorProps: {
       attributes: {
         class: "pl-0.5 prose prose-base md:prose-md lg:prose-lg xl:prose-2xl focus:outline-none",
-      }
+      },
     },
     onUpdate: ({ editor }) => {
-      // const html = editor.getHTML();
-      const text = editor.getText();
-      setEditorContent(text);
+      const updated = type === STR_TODO
+        ? editor.getText()
+        : DOMPurify.sanitize(editor.getHTML());
+      setEditorContent(updated);
     },
   });
 

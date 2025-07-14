@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { addTodo } from "@/services/todoServices";
+import { addNote } from "@/services/noteServices";
 import HomeLayout from "@/layouts/HomeLayout"
 import TodosSection from "@/components/sections/TodosSection"
 import NotesSection from "@/components/sections/NotesSection"
@@ -11,22 +12,33 @@ import { STR_TODO, STR_TODO_PLACEHOLDER, STR_NOTE_PLACEHOLDER } from "@/lib/cons
 function HomePage() {
 
   const { 
-    todos, setTodos
+    todos, setTodos,
+    notes, setNotes
   } = useAppContext() 
 
-  const [ placeholder, setPlaceholder ] = useState(STR_TODO_PLACEHOLDER)
+  const [ textEditorType, setTextEditorType ] = useState(STR_TODO)
+  
+  const handleOnclick = (action) => setTextEditorType(action);
 
-  const handleOnclick = (action) => {
-    action === STR_TODO ? 
-      setPlaceholder(STR_TODO_PLACEHOLDER) :
-      setPlaceholder(STR_NOTE_PLACEHOLDER)
-  };
+  const handleSubmit = (editorContent) => {
+    textEditorType === STR_TODO ? 
+      handleSubmitTodo(editorContent) :
+      handleSubmitNote(editorContent)
+  }
 
-  const handleSubmit = async (editorContent) => {
-    console.log(editorContent);
+  const handleSubmitTodo = async (editorContent) => {
     const response = await addTodo(editorContent);
     if (response.success) { 
       setTodos([response.data, ...todos])
+    } else {
+      console.error(response.message);
+    };
+  };
+
+  const handleSubmitNote = async (editorContent) => {
+    const response = await addNote(editorContent);
+    if (response.success) { 
+      setNotes([response.data, ...notes])
     } else {
       console.error(response.message);
     };
@@ -42,9 +54,9 @@ function HomePage() {
             />
             <TipTapTextEditor
               onSubmit={handleSubmit} 
-              placeholder={placeholder}
-              icon="faArrowRight"
-            />  
+              type={textEditorType}
+              placeholder={textEditorType === STR_TODO ? STR_TODO_PLACEHOLDER : STR_NOTE_PLACEHOLDER}
+            /> 
           </div>
         }
         leftCol={
