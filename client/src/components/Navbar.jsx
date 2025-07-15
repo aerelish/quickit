@@ -1,13 +1,8 @@
-// packages
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
-
-// context
-import { useAuthContext } from "../context/AuthContext";
-
-// others
-import Logo from '../assets/logo_light.png'
+import { useAuthContext } from "@/context/AuthContext";
+import Logo from '@/assets/logo_light.png'
 
 function Navbar() {
 
@@ -21,8 +16,8 @@ function Navbar() {
   };
 
   return (
-    <nav className="top-1 w-full z-40 pt-[4em]">
-      <div className="max-w-4xl mx-auto w-full px-8 md:px-24 flex justify-between items-center">
+    <nav className="top-1 z-40 w-full py-4 px-4 max-w-screen-xl mx-auto justify-self-center">
+      <div className="flex justify-between items-center">
         <Link className="flex items-center gap-2" to="/">
           <img className="w-6 h-6" src={Logo} alt="ejrLogo"/>
           <h1 className="text-2xl font-semibold">Quickit</h1>

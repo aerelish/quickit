@@ -1,15 +1,10 @@
-// import packages here
 import { Routes, Route, Navigate } from 'react-router-dom';
-
-// import components here
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Todo from './pages/Todo';
-
-// import context
-import { useAuthContext } from './context/AuthContext.jsx';
+import { useAuthContext } from '@/context/AuthContext';
+import AppLayout from '@/layouts/AppLayout';
+import HomePage from '@/pages/HomePage';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
 
 function App() {
   
@@ -29,19 +24,18 @@ function App() {
           <Navigate to='/login' /> 
         ) : (
           <ProtectedRoute>
-            <Navbar />
-            <main className='w-screen h-screen pt-12 px-8'>
-              <Todo/>
-            </main>   
+            <AppLayout>
+              <HomePage/>
+            </AppLayout>   
           </ProtectedRoute>
         )
       } />
 
       {/* Login Route */}
-      <Route path="/login" element={<Login/>} />
+      <Route path="/login" element={<LoginPage/>} />
 
       {/* Register Route */}
-      <Route path="/register" element={<Register/>} />
+      <Route path="/register" element={<RegisterPage/>} />
   
     </Routes>
   )

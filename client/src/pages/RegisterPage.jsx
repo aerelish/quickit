@@ -12,7 +12,7 @@ import { register } from '../services/authServices';
 // context
 import { useAuthContext } from '../context/AuthContext';
 
-function Register() {
+function RegisterPage() {
 
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuthContext();
@@ -105,4 +105,4 @@ function Register() {
   )
 };
 
-export default Register;
+export default RegisterPage;

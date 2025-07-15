@@ -114,7 +114,7 @@ router.put('/swap', async(req, res) => {
 // update todo
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { data, title } = req.body;
+  const { data } = req.body;
   try {
 
     const updatedTodo = await prisma.todo.update({

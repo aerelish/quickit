@@ -1,20 +1,16 @@
 // packages
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppContext } from '@/context/AppContext';
+import { useAuthContext } from '@/context/AuthContext';
+import { login } from '@/services/authServices';
+import InputField from '@/components/InputField';
+import Button from '@/components/Button';
 
-// components
-import InputField from '../components/InputField';
-import Button from '../components/Button';
-
-// services
-import { login } from '../services/authServices';
-
-// context
-import { useAuthContext } from '../context/AuthContext';
-
-function Login() {
+function LoginPage() {
 
   const navigate = useNavigate();
+  const { setUser } = useAppContext()
   const { setIsLoggedIn, setIsTokenValid } = useAuthContext()
 
   const [ username, setUsername ] = useState('');
@@ -29,6 +25,7 @@ function Login() {
       setIsLoggedIn(true);
       setIsTokenValid(true);
       setLoginError('');
+      setUser(username)
       navigate('/');
     } else {
       setLoginError(response.error)
@@ -67,4 +64,4 @@ function Login() {
   );
 };
 
-export default Login;
+export default LoginPage;

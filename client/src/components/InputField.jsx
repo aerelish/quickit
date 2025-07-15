@@ -9,7 +9,7 @@ function InputField({
   className = ''
 }) {
   return (
-    <div className="my-2 md:w-full">
+    <div className="py-2 md:w-full">
       {label && (
         <label htmlFor={name} className="block text-sm font-medium text-gray-300 mb-1 lg:text-2xl">
           {label}
