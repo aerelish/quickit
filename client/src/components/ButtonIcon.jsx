@@ -7,10 +7,10 @@ function ButtonIcon ({
   className = ''
 }) {
 
-  const defaultClassStyle = `text-sm text-gray-400 cursor-pointer transition-all duration-200 ${hoverColor && `hover:text-${hoverColor}`}`
+  const defaultClassStyle = `text-sm text-gray-400 cursor-pointer transition-all duration-200`
   
   return (
-    <button className={className ? className : defaultClassStyle}>
+    <button className={`${className ? className : defaultClassStyle} ${hoverColor && `hover:text-${hoverColor}`}`}>
       <FontAwesomeIcon
         onClick={onClick}
         icon={icon}

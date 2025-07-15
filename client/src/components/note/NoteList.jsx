@@ -5,14 +5,14 @@ import NoteItem from "@/components/note/NoteItem";
 
 function NoteList() {
 
+  const { notes, setNotes } = useAppContext(); 
+
   const loadNotes = async () => {
     const response = await getNotes();
     if (response.success) { setNotes(response.data) };
   }
 
-  const { notes, setNotes } = useAppContext(); 
-  
-  useEffect(() => { loadNotes }, [])
+  useEffect(() => { loadNotes() }, [])
 
   useEffect(() => {
     setNotes(notes)
