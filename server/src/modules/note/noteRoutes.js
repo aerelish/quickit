@@ -3,6 +3,7 @@ import prisma from '../../db/prismaClient.js';
 
 const router = express.Router();
 
+// get all notes
 router.get('/', async (req, res) => {
   try {
     const notes = await prisma.note.findMany({
@@ -24,7 +25,8 @@ router.get('/', async (req, res) => {
   }  
 })
 
-router.post('/', async(req, res) => {
+// add new note
+router.post('/', async (req, res) => {
   const { content } = req.body;
   try {
     
@@ -57,6 +59,50 @@ router.post('/', async(req, res) => {
   } catch (error) {
     console.log(error.message)
     res.status(503).json({ message: 'Internal server error' }); 
+  }
+})
+
+// update note
+router.put('/:id', async (req, res) => {
+  const { id } = req.params
+  const { data } = req.body
+  try {
+    const updatedNote = await prisma.note.update({
+      where: {
+        id: parseInt(id),
+        userId: req.userId
+      },
+      data: data,
+      select: {
+        id: true,
+        index: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true
+      }
+    });
+    
+    res.json(updatedNote) 
+  } catch (error){
+    console.log(error.message)
+    res.status(503).json({ message: 'Internal server error' }); 
+  }
+})
+
+// delete note
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    await prisma.note.delete({
+      where: {
+        id: parseInt(id),
+        userId: req.userId
+      }
+    });
+    res.json({ success: true, message: 'Deleted successfully...' })
+  } catch (error) {
+    console.log(error.message)
+    res.status(503).json({ success: false, message: 'Internal server error' });  
   }
 })
 
