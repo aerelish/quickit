@@ -7,6 +7,11 @@ import noteRoutes from '../modules/note/noteRoutes.js';
 
 const router = express.Router();
 
+// api health check
+router.use('/healthcheck', async(req, res) => {
+  res.status(200).json({ message: "Accessing API Routes" });
+})
+
 // unprotected routes
 
 /** /api/auth */
