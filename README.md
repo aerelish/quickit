@@ -15,7 +15,7 @@ Yes, this is just a Todo app for now 🥲, but fear not the rest are coming soon
 ## Functionalities
 
 - Simple User Authentication using JWT
-- Simple Rich Text Editor using TipiTop
+- Simple Rich Text Editor using TipTap
 - CRUD Operations for Todo / Notes
 
 ## Preview
